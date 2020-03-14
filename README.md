@@ -6,6 +6,6 @@
   npm install 安装依赖包
   nodemon start  启动后端环境
 
-## 进去view目录
+## 进入view目录
   npm install 安装依赖包
   npm run dev 启动前端项目
