@@ -7,6 +7,7 @@ import User from '@/pages/User/user'
 import Hotel from '@/pages/Hotel/Hotel'
 import City from '@/pages/City/city'
 import HotelPages from '@/pages/Hotelpages/hotelpages'
+import HotelDetail from '@/pages/HotelDetail/hotelDetail'
 
 Vue.use(Router)
 
@@ -63,6 +64,14 @@ export default new Router({
       component: HotelPages,
       meta:{
         title:'酒店页面'
+      }
+    },
+    {
+      path: '/hoteldetail/:id',
+      name: 'HotelDetail',
+      component: HotelDetail,
+      meta:{
+        title:'酒店详情页面'
       }
     }
   ]

@@ -17,7 +17,7 @@ export default {
 <style scoped>
 .logo{
   width: 100%;
-  height: 4rem;
+  height: 3.5rem;
   box-sizing: border-box;
   display: flex;
   line-height: 4rem;

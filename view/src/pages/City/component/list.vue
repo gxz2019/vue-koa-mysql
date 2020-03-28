@@ -8,7 +8,7 @@
       <div class="hot-city-item">
         <div
           class="hot-item"
-          v-for="(item,index) in hotCities"
+          v-for="(item,index) in hotCities" 
           :key="index"
           @click="handleCityChange(item.name)"
         >

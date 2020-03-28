@@ -12,6 +12,7 @@ import Header from './component/header';
 import HeaderBar from './component/HeaderBar';
 import List from './component/list';
 import Alphabet from './component/alphabet'
+import {getHotCities,getCities} from '../../api/api'
 export default {
   components:{
     Header,HeaderBar,List,
@@ -25,26 +26,17 @@ export default {
   },
    mounted(){
     this.gethotCities();
-    this.getCities()
+    this.getCity()
   },
   methods:{ 
     gethotCities() {
-      this.$http({
-        type:'get',
-        url:'/api/gxz/index'
-      })
-      .then((res) => {
+      getHotCities().then((res) => {
         this.hotCities = res.data.hotCities;
       })
     },
-    getCities() {
-      this.$http({
-        type:'get',
-        url:'../../../static/city.json'
-      })
-      .then((res) => {
+    getCity() {
+      getCities().then(res =>{
         this.cities = res.data.data.cities
-        // console.log(this.cities)
       })
     },
     run() {

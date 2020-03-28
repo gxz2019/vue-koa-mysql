@@ -14,8 +14,6 @@
         <van-swipe-item v-for="(item,index) in bannerList" :key="index">
           <div class="banner-img" :style="`background-image:url(${item.image_url})`"></div>
         </van-swipe-item>
-        <!-- <div class="custom-indicator" slot="indicator">
-        </div>-->
       </van-swipe>
     </div>
     <div class="icon">
@@ -78,13 +76,14 @@
 </template>
 
 <script>
-// import axios from 'axios'
 import logo from "./component/logo";
 import Search from "./component/Search";
+import {getBanner,getList} from '../../api/api'
 export default {
   name: "Index",
   data() {
     return {
+      pageSize:1,
       bannerList: [],
       iconList: [
         {
@@ -144,37 +143,26 @@ export default {
     Search
   },
   mounted() {
-    this.getData();
-    // this.$nextTick(() => {
-    //   this.scroll = new BScroll(this.$refs.bsCroll)
-    // })
+    this.getIndexBanner();
+    this.getIndexList()
   },
   methods: {
     goToDL() {
       this.$router.push({ path: "/register" });
     },
-    getData() {
-      this.$http({
-        type: "get",
-        url: "/api/gxz/index"
+    getIndexBanner() {
+      getBanner().then((res) => {
+        this.bannerList = res.data.banner;
+      });
+    },
+    getIndexList() {
+      getList({page:this.pageSize}).then(res => {
+        this.liList = [...this.liList,...res.data.strategy];
+        this.pageSize ++
       })
-        .then(res => {
-          this.bannerList = res.data.banner;
-          // this.liList = res.data.strategy;
-          if (this.liList.length < 1) {
-            for (let i = 0; i < 7; i++) {
-              this.liList.push(res.data.strategy[i]);
-            }
-          } else {
-            this.liList = res.data.strategy;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
     },
     loadMore() {
-      this.getData();
+      this.getIndexList();
     }
   }
 };

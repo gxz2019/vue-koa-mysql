@@ -36,17 +36,19 @@ form{
   position: relative;
 }
 input{
+  font-size: 0.8rem;
   height: 2rem;
   border: none;
   background-color: #f3f3f3;
   align-self: center;
 }
 img{
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.2rem;
+  width: 1.2rem;
   align-self: center;
   /* float: right; */
   position: absolute;
   right: 0;
+  margin-right:0.5rem ;
 }
 </style>

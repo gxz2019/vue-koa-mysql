@@ -4,6 +4,10 @@ const router = require('koa-router')({
 
 const constrollers = require('../controllers/index')
 
-router.get('/index',constrollers)
+router.get('/banner',constrollers.getBanner)
+router.get('/strategy',constrollers.getStrategy)
+router.get('/hotCities',constrollers.gethotCities)
+router.get('/cities',constrollers.getCities)
+router.get('/hotels',constrollers.getHotels)
 
 module.exports = router

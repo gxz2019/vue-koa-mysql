@@ -5,9 +5,7 @@ import App from './App'
 import router from './router'
 import { Swipe,SwipeItem,Calendar, Toast,Cell,Popup} from 'vant'
 import 'vant/lib/index.css'
-import axios from 'axios'
 import store from './store'
-Vue.prototype.$http= axios
 Vue.config.productionTip = false
 Vue.use(Swipe).use(SwipeItem).use(Calendar).use(Cell).use(Popup)
 

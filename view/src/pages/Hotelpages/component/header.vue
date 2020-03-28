@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-bar">
         <div class="header-icon" @click="back">
-          <img src="@/assets/images/left.png" alt="">
+          <img src="@/assets/images/left123.png" alt="">
         </div>
         <div class="header-title">
           <div class="city">
@@ -36,16 +36,21 @@ export default {
   .header{
     width: 100%;
     height: 3rem;
-    background-color: #FFDB00;
+    background-color: #fff;
     font-weight: 100;
     position: relative;
+    border-bottom: 1px solid rgb(242,242,242);
+    position: sticky;
+    top: 0;
+    z-index: 100;
     .header-bar{
       display: flex;
       align-items: center;
       height: 3rem;
       .header-icon{
-        width: 1rem;height: 1rem;
+        width: 1.2rem;height: 1.2rem;
         margin-left: 1rem;
+        
         img{
           width: 100%;height: 100%;
         }
