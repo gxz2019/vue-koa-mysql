@@ -34,4 +34,9 @@ export const getHotels = (params) => {
   return http.get('/hotels',{params:params})
 }
 
+//获取酒店详情
+export const getHotelDetail = (params) => {
+  return http.get('/hoteldetail',{params:params})
+}
+
 

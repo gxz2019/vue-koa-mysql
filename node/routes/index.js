@@ -9,5 +9,6 @@ router.get('/strategy',constrollers.getStrategy)
 router.get('/hotCities',constrollers.gethotCities)
 router.get('/cities',constrollers.getCities)
 router.get('/hotels',constrollers.getHotels)
+router.get('/hoteldetail',constrollers.getHotelsDetail)
 
 module.exports = router

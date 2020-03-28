@@ -33,6 +33,12 @@ const getHotels = async (ctx) => {
     'hotels':hotels
   }
 }
+const getHotelsDetail = async(ctx) =>{
+  const hotelDetail = await knex('mfw_hotel_detail').select()
+  ctx.body = {
+    'hotelDetail':hotelDetail
+  }
+}
 module.exports = {
-  getBanner,getStrategy,gethotCities,getCities,getHotels
+  getBanner,getStrategy,gethotCities,getCities,getHotels,getHotelsDetail
 }
