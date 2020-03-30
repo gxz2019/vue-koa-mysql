@@ -13,7 +13,6 @@ const getStrategy = async (ctx) => {
   ctx.body = {
     'strategy':strategy
   }
-  console.log(num)
 }
 const gethotCities = async (ctx) => {
   const hotCities = await knex('mfw_index_hotcities').select()
@@ -39,6 +38,63 @@ const getHotelsDetail = async(ctx) =>{
     'hotelDetail':hotelDetail
   }
 }
+
+//登录
+const getUserLogin = async(ctx) => {
+  let _username = ctx.request.body.userName
+  let _usepwd = ctx.request.body.password
+  const userLogin = await knex('mfw_user').where({username:_username,password:_usepwd}).select()
+  let result = {
+    nickname:userLogin[0].nickname,
+    img:userLogin[0].img
+  }
+  if(userLogin.length){
+    ctx.body = {
+      data:result,
+      code:'200',
+      mess:'登录成功'
+    }
+  }else{
+    ctx.body = {
+      code:'404',
+      mess:'账号或密码错误'
+    }
+  }
+}
+
+//注册
+const userRrgister = async(ctx) => {
+  let _username = ctx.request.body.username
+  let _nickname = ctx.request.body.nickname
+  let _pwd = ctx.request.body.password
+  let _img = ctx.request.body.img
+  console.log(ctx.request.body)
+  const findUserName = await knex('mfw_user').where({username:_username}).select()
+  const findUserNickName = await knex('mfw_user').where({nickname:_nickname}).select()
+  if(findUserName.length) {
+    ctx.body = {
+      code:'800',
+      mess:'账号已存在'
+    }
+  }
+  if(findUserNickName.length){
+    ctx.body = {
+      code:'801',
+      mess:'昵称已存在'
+    }
+  }
+  const insertUserInfo = await knex('mfw_user').insert({username:_username,nickname:_nickname,password:_pwd,img:_img})
+  let result = {
+    nickname:insertUserInfo[0].nickname,
+    img:insertUserInfo[0].img
+  }
+  ctx.body = {
+    code:'200',
+    mess:'注册成功',
+    data:result
+  }
+}
 module.exports = {
-  getBanner,getStrategy,gethotCities,getCities,getHotels,getHotelsDetail
+  getBanner,getStrategy,gethotCities,getCities,getHotels,getHotelsDetail,getUserLogin,
+  userRrgister
 }

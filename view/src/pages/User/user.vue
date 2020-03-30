@@ -13,10 +13,10 @@
     </div>
     <div class="userMsg">
       <div class="userMsg-img">
-        <img src="../../assets/images/mine.jpeg" alt="">
+        <img :src="userMsg.img" alt="">
       </div>
       <div class="userMsg-span">
-        <span>北方的鬼</span>
+        <span>{{userMsg.nickname}}</span>
       </div>
     </div>
     <div class="item" v-for="(item,index) in itemList" :key="index">
@@ -30,16 +30,14 @@
         <img src="../../assets/images/right-row.png" alt="">
       </div>
     </div>
-    <!-- <div class="exit">
-      <div class="exit-bar">
-        <h2>退出登录</h2>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
 export default {
+  mounted() {
+    this.userMsg = JSON.parse(sessionStorage.getItem("userInfo"));
+  },
   data() {
     return {
       itemList:[
@@ -59,7 +57,8 @@ export default {
           img:require('../../assets/images/dianping.png'),
           title:'我的点评'
         }
-      ]
+      ],
+      userMsg:{}
     }
   }
 }

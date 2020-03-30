@@ -1,14 +1,17 @@
 import axios from 'axios'
+import QS from 'qs'
 
 let host = '/api/gxz'
+
 
 let http = axios.create({
   baseURL:host,
   timeout:1000,
-  headers:{
-    "Content-type": "application/json"
-  }
+  // headers:{
+  //   'Content-Type':'application/json'
+  // }
 })
+
 //获取首页轮播图
 export const getBanner = (params) => {
   return http.get('/banner',{params:params})
@@ -37,6 +40,17 @@ export const getHotels = (params) => {
 //获取酒店详情
 export const getHotelDetail = (params) => {
   return http.get('/hoteldetail',{params:params})
+}
+
+//验证用户信息
+export const getUserMsg = (params) => {
+  return http.post('/userlogin',params)
+}
+
+//注册
+
+export const register = (params) => {
+  return http.post('/userregister',params)
 }
 
 

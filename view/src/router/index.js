@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Cover from '../pages/Cover/Cover'
 import Index from '@/pages/index/Index'
-import Register from '@/pages/register/register'
+import Login from '@/pages/login/login'
 import User from '@/pages/User/user'
 import Hotel from '@/pages/Hotel/Hotel'
 import City from '@/pages/City/city'
@@ -27,15 +27,15 @@ export default new Router({
       }
     },
     {
-      path: '/Register',
-      name: 'Register',
-      component: Register,
+      path: '/login',
+      name: 'Login',
+      component: Login,
       meta:{
-        title:'注册登录'
+        title:'登录'
       }
     },
     {
-      path: '/User',
+      path: '/user',
       name: 'User',
       component: User,
       meta:{

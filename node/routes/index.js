@@ -10,5 +10,7 @@ router.get('/hotCities',constrollers.gethotCities)
 router.get('/cities',constrollers.getCities)
 router.get('/hotels',constrollers.getHotels)
 router.get('/hoteldetail',constrollers.getHotelsDetail)
+router.post('/userlogin',constrollers.getUserLogin)
+router.post('/userregister',constrollers.userRrgister)
 
-module.exports = router
+module.exports = router 

@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     goToDL() {
-      this.$router.push({ path: "/register" });
+      this.$router.push({ path: "/login" });
     },
     getIndexBanner() {
       getBanner().then((res) => {
