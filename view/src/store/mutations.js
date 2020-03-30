@@ -7,6 +7,9 @@ const mutatitons = {
   },
   transmitIndex(state,index) {
     state.letter = index
+  },
+  changeLogin(state,login) {
+    state.login = login
   }
 }
 export default mutatitons

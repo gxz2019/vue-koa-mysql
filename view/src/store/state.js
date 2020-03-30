@@ -1,4 +1,5 @@
 const state = {
+  login:false,
   city: '北京',
   date:{
     Month1: (new Date()).getMonth() + 1,

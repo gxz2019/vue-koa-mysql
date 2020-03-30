@@ -4,8 +4,11 @@
     <div class="header">
       <logo>
         <Search slot="search"></Search>
-        <div slot="icon" class="icon" @click="goToDL">
+        <div slot="icon" class="icon" @click="goToDL" v-if="login">
           <a class="icon-a">登录</a>
+        </div>
+        <div slot="icon" class="icon userimg" v-else @click="goToUser">
+          <img :src="userImg" alt="">
         </div>
       </logo>
     </div>
@@ -78,11 +81,16 @@
 <script>
 import logo from "./component/logo";
 import Search from "./component/Search";
-import {getBanner,getList} from '../../api/api'
+import {getBanner,getList} from '../../api/api' 
+import { mapState } from 'vuex'
 export default {
   name: "Index",
+  computed:{
+    ...mapState(['login'])
+  },
   data() {
     return {
+      userImg:'',
       pageSize:1,
       bannerList: [],
       iconList: [
@@ -145,6 +153,7 @@ export default {
   mounted() {
     this.getIndexBanner();
     this.getIndexList()
+    this.userImg = JSON.parse(sessionStorage.getItem("userInfo")).img;
   },
   methods: {
     goToDL() {
@@ -163,6 +172,9 @@ export default {
     },
     loadMore() {
       this.getIndexList();
+    },
+    goToUser() {
+      this.$router.push({path:'/user'})
     }
   }
 };

@@ -38,7 +38,7 @@
           <input type="password" placeholder="您的密码" @change="getPassword" />
         </div>
       </div>
-      <van-uploader  :max-count="1" :after-read="afterRead" accept="image/*.*" >
+      <van-uploader  v-model="list" :max-count="1" :after-read="afterRead" accept="image/*.*" >
         <!-- 上传照片 -->
       </van-uploader>
       <div>
@@ -53,6 +53,7 @@
 
 <script>
 import { getUserMsg,register } from '../../api/api'
+import { mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -66,6 +67,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['changeLogin']),
     toIndex() {
       this.$router.go(-1);
     },
@@ -87,7 +89,7 @@ export default {
     },
     afterRead(file) {
       this.imgUrl = file.content
-      console.log(this.imgUrl)
+      console.log(file)
     },
     getNick(e) {
       this.nickName = e.target.value
@@ -98,6 +100,7 @@ export default {
     getPassword(e) {
       this.password = e.target.value;
     },
+    //登录
     handLogin() {
       let reg = /^1(3|4|5|6|7|8|9)\d{9}$/;
       let reg2 = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -120,7 +123,9 @@ export default {
           this.$toast(res.data.mess)
         }
         if(res.data.code == '200') {
+          let login = true
           this.$router.push({path:'/user'})
+          this.changeLogin(login)
         }
       }).catch(err => {console.log(err)})
     },
@@ -141,8 +146,17 @@ export default {
         return;
       }
       register({nickName:this.nickName,username:this.userName,password:this.password,img:this.imgUrl}).then(res => {
-        console.log.log(res)
-      })
+        sessionStorage.setItem('userInfo',JSON.stringify(res.data.data))
+        if(res.data.code == '800') {
+          this.$toast(res.data.mess)
+        }
+        if(res.data.code == '801') {
+          this.$toast(res.data.mess)
+        }
+        if(res.data.code == '200') {
+          this.$router.push({path:'/user'})
+        }
+      }).catch(err => {console.log(err)})
     }
   }
 };

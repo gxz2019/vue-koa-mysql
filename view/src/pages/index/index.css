@@ -13,6 +13,11 @@ body{
   flex: 0.8;
   margin-bottom: 1rem;
 }
+.userimg img{
+  width: 1.8rem;height: 1.8rem;
+  border-radius: 50%;
+  margin-bottom:0.2rem ;
+}
 .icon-a {
   color: #ffa800;
   text-decoration: none;

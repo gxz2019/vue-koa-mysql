@@ -6,10 +6,7 @@ let host = '/api/gxz'
 
 let http = axios.create({
   baseURL:host,
-  timeout:1000,
-  // headers:{
-  //   'Content-Type':'application/json'
-  // }
+  timeout:10000,
 })
 
 //获取首页轮播图

@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="header">
-      <div class="header-icon">
+      <div class="header-icon" @click="handClick"> 
         <i class="iconfont icon-zuo-copy" style="color:#ffa800"></i>
       </div>
       <div class="header-span">
         <span>我的窝</span>
       </div>
       <div class="header-icon header-icon1">
-        <i class="iconfont icon-shezhi" style="color:#ffa800"></i>
+        <i class="iconfont icon-shezhi" style="color:#ffffff"></i>
       </div>
     </div>
     <div class="userMsg">
@@ -59,6 +59,11 @@ export default {
         }
       ],
       userMsg:{}
+    }
+  },
+  methods:{
+    handClick() {
+      this.$router.push({path:'/index'})
     }
   }
 }

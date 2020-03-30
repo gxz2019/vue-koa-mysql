@@ -1,4 +1,5 @@
 const knex= require('../mysql/mysql')
+const fs = require('fs')
 
 const getBanner = async (ctx)  => {
   const banner = await knex('mfw_index_banner').select()
@@ -65,10 +66,9 @@ const getUserLogin = async(ctx) => {
 //注册
 const userRrgister = async(ctx) => {
   let _username = ctx.request.body.username
-  let _nickname = ctx.request.body.nickname
+  let _nickname = ctx.request.body.nickName
   let _pwd = ctx.request.body.password
   let _img = ctx.request.body.img
-  console.log(ctx.request.body)
   const findUserName = await knex('mfw_user').where({username:_username}).select()
   const findUserNickName = await knex('mfw_user').where({nickname:_nickname}).select()
   if(findUserName.length) {
@@ -76,17 +76,19 @@ const userRrgister = async(ctx) => {
       code:'800',
       mess:'账号已存在'
     }
+    return 
   }
   if(findUserNickName.length){
     ctx.body = {
       code:'801',
       mess:'昵称已存在'
     }
+    return 
   }
   const insertUserInfo = await knex('mfw_user').insert({username:_username,nickname:_nickname,password:_pwd,img:_img})
   let result = {
-    nickname:insertUserInfo[0].nickname,
-    img:insertUserInfo[0].img
+    nickname:_nickname,
+    img:_img
   }
   ctx.body = {
     code:'200',
