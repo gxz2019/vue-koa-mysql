@@ -10,6 +10,9 @@ const mutatitons = {
   },
   changeLogin(state,login) {
     state.login = login
+  },
+  changeHotel(state,data){
+    state.hotelLists = data
   }
 }
 export default mutatitons

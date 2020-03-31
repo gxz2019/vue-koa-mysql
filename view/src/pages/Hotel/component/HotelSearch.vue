@@ -55,28 +55,33 @@
           <button>查找酒店</button>
         </div>
       </div>
-      <van-popup v-model="show"  position="bottom" :style="{ height: '100%' }">
+      <!-- <van-popup v-model="show"  position="bottom" :style="{ height: '100%' }">
         <van-calendar v-model="show" type="range" @confirm="onConfirm"
          color="#ffdb00" confirm-disabled-text="请选择结束时间" :formatter="formatter" />
-      </van-popup>
+      </van-popup> -->
+      <Canlendar  :show="show" :formatter="formatter" @hand="onConfirm"></Canlendar>
     </div>
 </template>
 
 <script>
 import { mapState,mapMutations } from 'vuex'
+import Canlendar from '../../Common/Calendar'
 export default {
+  components:{
+    Canlendar
+  },
   computed: {
-    ...mapState(['city']),
-    ...mapState(['date'])
+    ...mapState(['city','date']),
   }
   ,
   data() {
     return {
       show:false,
-      
+      bottom:''
     }
   },
   methods:{
+    ...mapMutations(['changDate']),
     gotoHotel() {
       this.$router.push({path:'/hotelpages'})
     },
@@ -84,7 +89,7 @@ export default {
       this.$router.push({ path:'/city'})
     },
     handDate() {
-      this.show = true
+     this.show = true
     },
     formatter(day) {
       if (day.type === 'start') {
@@ -94,9 +99,9 @@ export default {
       }
       return day
     },
-    ...mapMutations(['changDate']),
+    
     onConfirm(date) {
-      this.show = false;
+      this.show = false
       var date1 = {}
       date1.Month1 = date[0].getMonth() + 1;
       date1.Day1 = date[0].getDate()

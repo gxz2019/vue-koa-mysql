@@ -4,11 +4,11 @@
     <div class="header">
       <logo>
         <Search slot="search"></Search>
-        <div slot="icon" class="icon" @click="goToDL" v-if="login">
+        <div slot="icon" class="icon" @click="goToDL" v-if="!login">
           <a class="icon-a">登录</a>
         </div>
         <div slot="icon" class="icon userimg" v-else @click="goToUser">
-          <img :src="userImg" alt="">
+          <img :src="userImg" alt />
         </div>
       </logo>
     </div>
@@ -23,14 +23,12 @@
       <div class="icon-bar">
         <ul>
           <li v-for="(item,index) in iconList" :key="index">
-            <router-link :to="item.name">
-              <div class="icon-bgc">
+              <div class="icon-bgc" @click="handRouter(item.name)">
                 <div class="icon-item" :style="{backgroundColor:item.color}">
                   <img :src="item.icon" alt />
                 </div>
                 <div class="icon-title" :style="{color:item.color}">{{item.title}}</div>
               </div>
-            </router-link>
           </li>
         </ul>
       </div>
@@ -81,25 +79,19 @@
 <script>
 import logo from "./component/logo";
 import Search from "./component/Search";
-import {getBanner,getList} from '../../api/api' 
-import { mapState } from 'vuex'
+import { getBanner, getList } from "../../api/api";
+import { mapState } from "vuex";
 export default {
   name: "Index",
-  computed:{
-    ...mapState(['login'])
+  computed: {
+    ...mapState(["login"])
   },
   data() {
     return {
-      userImg:'',
-      pageSize:1,
+      userImg: "",
+      pageSize: 1,
       bannerList: [],
       iconList: [
-        {
-          title: "找攻略",
-          icon: require("@/assets/images/gonglve.png"),
-          color: "#ff9d00",
-          name: "gonglve"
-        },
         {
           title: "看游记",
           icon: require("@/assets/images/youji1.png"),
@@ -107,16 +99,23 @@ export default {
           name: "youji"
         },
         {
+          title: "找攻略",
+          icon: require("@/assets/images/gonglve.png"),
+          color: "#ff9d00",
+          name: "gonglve"
+        },
+        
+        {
           title: "问达人",
           icon: require("@/assets/images/wen.png"),
           color: "#42d6ba",
           name: "daren"
         },
         {
-          title: "结伴",
-          icon: require("@/assets/images/jieban.png"),
-          color: "#f94a87",
-          name: "jieban"
+          title: "当地玩乐",
+          icon: require("@/assets/images/wanle.png"),
+          color: "#b160df",
+          name: "wanle"
         },
         {
           title: "酒店",
@@ -137,10 +136,11 @@ export default {
           name: "jipiao"
         },
         {
-          title: "当地玩乐",
-          icon: require("@/assets/images/wanle.png"),
-          color: "#b160df",
-          name: "wanle"
+          
+          title: "我的",
+          icon: require("@/assets/images/jieban.png"),
+          color: "#f94a87",
+          name: "user"
         }
       ],
       liList: []
@@ -152,29 +152,44 @@ export default {
   },
   mounted() {
     this.getIndexBanner();
-    this.getIndexList()
-    this.userImg = JSON.parse(sessionStorage.getItem("userInfo")).img;
+    this.getIndexList();
+    if (sessionStorage.getItem("userInfo")) {
+      this.userImg = JSON.parse(sessionStorage.getItem("userInfo")).img;
+    }
   },
   methods: {
+    handRouter(id) {
+      if(id == 'user') {
+        if(this.login == false) {
+          this.$router.push({path:'/login'})
+          this.$toast('请先登录')
+        }else{
+          this.$router.push({path:`/${id}`})
+        }
+      }else{
+        this.$router.push({path:`/${id}`})
+      }
+      
+    },
     goToDL() {
       this.$router.push({ path: "/login" });
     },
     getIndexBanner() {
-      getBanner().then((res) => {
+      getBanner().then(res => {
         this.bannerList = res.data.banner;
       });
     },
     getIndexList() {
-      getList({page:this.pageSize}).then(res => {
-        this.liList = [...this.liList,...res.data.strategy];
-        this.pageSize ++
-      })
+      getList({ page: this.pageSize }).then(res => {
+        this.liList = [...this.liList, ...res.data.strategy];
+        this.pageSize++;
+      });
     },
     loadMore() {
       this.getIndexList();
     },
     goToUser() {
-      this.$router.push({path:'/user'})
+      this.$router.push({ path: "/user" });
     }
   }
 };

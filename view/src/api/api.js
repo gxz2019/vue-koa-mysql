@@ -50,4 +50,8 @@ export const register = (params) => {
   return http.post('/userregister',params)
 }
 
+//酒店评论
+export const hotelComments = (params) => {
+  return http.get('/hotelComments',{params:params})
+}
 

@@ -45,11 +45,12 @@ const getUserLogin = async(ctx) => {
   let _username = ctx.request.body.userName
   let _usepwd = ctx.request.body.password
   const userLogin = await knex('mfw_user').where({username:_username,password:_usepwd}).select()
-  let result = {
-    nickname:userLogin[0].nickname,
-    img:userLogin[0].img
-  }
+  
   if(userLogin.length){
+    let result = {
+      nickname:userLogin[0].nickname,
+      img:userLogin[0].img
+    }
     ctx.body = {
       data:result,
       code:'200',
@@ -96,7 +97,15 @@ const userRrgister = async(ctx) => {
     data:result
   }
 }
+
+//酒店评论
+const hotelComments = async(ctx) => {
+  const comments = await knex('mfw_hotel_comment').where({hotelid:0}).select()
+  ctx.body = {
+    'hotelComments':comments
+  }
+}
 module.exports = {
   getBanner,getStrategy,gethotCities,getCities,getHotels,getHotelsDetail,getUserLogin,
-  userRrgister
+  userRrgister,hotelComments
 }

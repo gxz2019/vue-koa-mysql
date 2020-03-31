@@ -124,6 +124,7 @@ export default {
         }
         if(res.data.code == '200') {
           let login = true
+          this.$toast(res.data.mess)
           this.$router.push({path:'/user'})
           this.changeLogin(login)
         }
@@ -154,6 +155,9 @@ export default {
           this.$toast(res.data.mess)
         }
         if(res.data.code == '200') {
+          this.$toast('注册成功')
+          let a = true
+          this.changeLogin(a)
           this.$router.push({path:'/user'})
         }
       }).catch(err => {console.log(err)})

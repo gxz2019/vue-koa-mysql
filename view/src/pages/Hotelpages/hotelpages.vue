@@ -1,26 +1,33 @@
 <template>
   <div class="hotelpages">
     <Header />
-    <HotelList :hotelList="hotelList" />
+    <HotelList :hotelList="hotelLists" />
   </div>
 </template>
 
 <script>
 import Header from './component/header'
 import HotelList from './component/hotelList'
-import {getHotels} from '../../api/api'
+import { mapActions,mapState } from 'vuex'
 export default {
   data() {
     return {
+      
       hotelList:[]
     }
+  },
+  computed:{
+    ...mapState(['hotelLists']),
   },
   components:{
     Header,
     HotelList
   },
+  methods:{
+    ...mapActions(['getHotelDetail'])
+  },
   mounted(){
-    getHotels().then(res=>{this.hotelList = res.data.hotels})
+    this.getHotelDetail()
   }
 }
 </script>

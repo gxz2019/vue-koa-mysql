@@ -12,5 +12,6 @@ router.get('/hotels',constrollers.getHotels)
 router.get('/hoteldetail',constrollers.getHotelsDetail)
 router.post('/userlogin',constrollers.getUserLogin)
 router.post('/userregister',constrollers.userRrgister)
+router.get('/hotelComments',constrollers.hotelComments)
 
 module.exports = router 

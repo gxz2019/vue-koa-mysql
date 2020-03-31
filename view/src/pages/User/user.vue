@@ -30,10 +30,16 @@
         <img src="../../assets/images/right-row.png" alt="">
       </div>
     </div>
+    <div class="exit" @click="handExit">
+      <span>
+        退出登录
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   mounted() {
     this.userMsg = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -62,8 +68,16 @@ export default {
     }
   },
   methods:{
+    ...mapMutations(['changeLogin']),
     handClick() {
       this.$router.push({path:'/index'})
+    },
+    handExit() {
+      this.$toast('成功退出')
+      this.$router.push({path:'/index'})
+      sessionStorage.clear()
+      let a = false
+      this.changeLogin(a)
     }
   }
 }
@@ -147,18 +161,17 @@ export default {
   position: absolute;
   right: 0;
 }
-/* .exit{
-  width: 100%;
-  height: 5rem;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 4rem;
+.exit{
+  position: fixed;
+  bottom: 0;
+  left: 1rem;
+  width: 90%;
+  margin: 0 auto;
+  height: 3rem;
+  background-color: #ffa800;
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 3rem;
 }
-.exit-bar{
-  border-radius: 50%50%;
-  padding: 0.5rem;
-  background-color: #008c8c;
-} */
 </style>
