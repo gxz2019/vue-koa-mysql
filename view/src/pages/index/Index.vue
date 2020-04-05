@@ -13,22 +13,27 @@
       </logo>
     </div>
     <div class="banner">
-      <van-swipe :autoplay="3000" indicator-color="#ffa800">
+      <van-swipe :autoplay="3000" @change="swipeChange" >
         <van-swipe-item v-for="(item,index) in bannerList" :key="index">
           <div class="banner-img" :style="`background-image:url(${item.image_url})`"></div>
         </van-swipe-item>
+        <template #indicator>
+          <div class="custom-indicator">
+            <div  ref="slider"></div>
+          </div>
+        </template>
       </van-swipe>
     </div>
     <div class="icon">
       <div class="icon-bar">
         <ul>
           <li v-for="(item,index) in iconList" :key="index">
-              <div class="icon-bgc" @click="handRouter(item.name)">
-                <div class="icon-item" :style="{backgroundColor:item.color}">
-                  <img :src="item.icon" alt />
-                </div>
-                <div class="icon-title" :style="{color:item.color}">{{item.title}}</div>
+            <div class="icon-bgc" @click="handRouter(item.name)">
+              <div class="icon-item" :style="{backgroundColor:item.color}">
+                <img :src="item.icon" alt />
               </div>
+              <div class="icon-title" :style="{color:item.color}">{{item.title}}</div>
+            </div>
           </li>
         </ul>
       </div>
@@ -37,7 +42,7 @@
       <div class="guideflow-title">
         <span class="text">
           <span style="color:yellow;font-size:25px">|</span>
-          推荐攻略
+          推荐游记
         </span>
       </div>
       <div class="content" style="height:170px" v-for="(item,index) in liList" :key="index">
@@ -104,7 +109,7 @@ export default {
           color: "#ff9d00",
           name: "gonglve"
         },
-        
+
         {
           title: "问达人",
           icon: require("@/assets/images/wen.png"),
@@ -136,7 +141,6 @@ export default {
           name: "jipiao"
         },
         {
-          
           title: "我的",
           icon: require("@/assets/images/jieban.png"),
           color: "#f94a87",
@@ -158,18 +162,20 @@ export default {
     }
   },
   methods: {
+    swipeChange(e){
+      this.$refs.slider.style.transform  = `translateX(${e*2.11}rem)`
+    },
     handRouter(id) {
-      if(id == 'user') {
-        if(this.login == false) {
-          this.$router.push({path:'/login'})
-          this.$toast('请先登录')
-        }else{
-          this.$router.push({path:`/${id}`})
+      if (id == "user") {
+        if (this.login == false) {
+          this.$router.push({ path: "/login" });
+          this.$toast("请先登录");
+        } else {
+          this.$router.push({ path: `/${id}` });
         }
-      }else{
-        this.$router.push({path:`/${id}`})
+      } else {
+        this.$router.push({ path: `/${id}` });
       }
-      
     },
     goToDL() {
       this.$router.push({ path: "/login" });

@@ -8,12 +8,12 @@
       <div class="i" @click="goBack">
         <i class="iconfont">&#xedff;</i>
       </div>
-      <div class="c" v-if="show" @click="changeShow">
+      <!-- <div class="c" v-if="show" @click="changeShow">
         <i class="iconfont">&#xe602;</i>
       </div>
       <div class="d" v-else @click="changeShow">
         <i class="iconfont">&#xe601;</i>
-      </div>
+      </div> -->
       <div class="comment">
         <div>
           <div>
@@ -72,10 +72,10 @@
     <div class="date">
       <div>
         <span>
-          入&nbsp;05月07日&nbsp;&nbsp;
+          入&nbsp;{{date.Month1}}月{{date.Day1}}日&nbsp;&nbsp;
           <div>
             <span>1晚</span>
-          </div>&nbsp;&nbsp;离&nbsp;05月08日
+          </div>&nbsp;&nbsp;离&nbsp;{{date.Month2}}月{{date.Day2}}日
         </span>
       </div>
     </div>
@@ -171,7 +171,7 @@ import { getHotelDetail, hotelComments } from "../../api/api";
 import { mapState } from 'vuex'
 export default {
   computed:{
-    ...mapState(['hotelLists'])
+    ...mapState(['hotelLists','date'])
   },
   data() {
     return {
@@ -216,9 +216,6 @@ export default {
     });
   },
   methods: {
-    changeShow() {
-      this.show = !this.show;
-    },
     handClick() {
       this.page = this.list.length;
     },
