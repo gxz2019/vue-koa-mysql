@@ -8,11 +8,9 @@
 </template>
 
 <script>
-import { mapMutations} from 'vuex'
 export default { 
 
   methods:{
-    ...mapMutations(['returnLast']),
     handClick() {
       this.$emit('homeRun')
     }
@@ -22,7 +20,6 @@ export default {
 
 <style lang="less" scoped>
   .header{
-    // width: 95%;
     margin: 0 auto;
     height: 4rem;
     background-color: #00BCD4;

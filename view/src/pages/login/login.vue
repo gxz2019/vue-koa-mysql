@@ -53,7 +53,7 @@
 
 <script>
 import { getUserMsg,register } from '../../api/api'
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState,mapActions } from 'vuex'
 export default {
   data() {
     return {

@@ -1,60 +1,59 @@
 <template>
   <div>
-    <Scroll ref="wrapper" :data="cities" class="list" > 
-    <div class="hot">
-      <div class="hot-city">
-        <span>热门城市</span>
-      </div>
-      <div class="hot-city-item">
-        <div
-          class="hot-item"
-          v-for="(item,index) in hotCities" 
-          :key="index"
-          @click="handleCityChange(item.name)"
-        >
-          <span>{{item.name}}</span>
-        </div>
-      </div>
-      <div class="city-contont" v-for="(item,index)  in cities" :key="index" ref="index">
+    <Scroll ref="wrapper" :data="cities" class="list">
+      <div class="hot">
         <div class="hot-city">
-          <span>{{index}}</span>
+          <span>热门城市</span>
         </div>
         <div class="hot-city-item">
           <div
             class="hot-item"
-            v-for="(city) in item"
-            :key="city.id"
-            @click="handleCityChange(city.name)"
+            v-for="(item,index) in hotCities"
+            :key="index"
+            @click="handleCityChange(item.name)"
           >
-            <span>{{city.name}}</span>
+            <span>{{item.name}}</span>
+          </div>
+        </div>
+        <div class="city-contont" v-for="(item,index)  in cities" :key="index" ref="index">
+          <div class="hot-city">
+            <span>{{index}}</span>
+          </div>
+          <div class="hot-city-item">
+            <div
+              class="hot-item"
+              v-for="(city) in item"
+              :key="city.id"
+              @click="handleCityChange(city.name)"
+            >
+              <span>{{city.name}}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </Scroll>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
 import Scroll from "@/pages/Common/scroll.vue";
-import { mapState } from 'vuex'
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   components: {
     Scroll
   },
-  props: {
-    hotCities: Array,
-    cities: Object
-  },
   data() {
     return {
       scrollY: 0,
-      currentIndex: 0,
+      currentIndex: 0
     };
   },
+  mounted() {
+    this.getHot();
+    this.getCities();
+  },
   computed: {
-    ...mapState(['letter']),
+    ...mapState(["letter", "hotCities", "cities"]),
     shortcutList() {
       var res = [];
       for (let i = 0; i <= 25; i++) {
@@ -74,6 +73,7 @@ export default {
   },
   methods: {
     ...mapMutations(["changCity"]),
+    ...mapActions(['getHot','getCities']),
     handleCityChange(name) {
       this.changCity(name);
       this.$router.push({ path: "/Hotel" });
@@ -82,26 +82,25 @@ export default {
       this.letter = i;
     }
   },
-  watch:{
+  watch: {
     letter() {
-      // console.log(this.letter)
-      // console.log(this.$refs.wrapper.scroll)
-      console.log(this.$refs.index[this.letter])
-      this.$refs.wrapper.scroll.scrollToElement(this.$refs.index[this.letter],300)
+      this.$refs.wrapper.scroll.scrollToElement(
+        this.$refs.index[this.letter],
+        300
+      );
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-
 .list {
   width: 100%;
   height: calc(100vh - 1rem);
   //  overflow: hidden;
   .hot {
     width: 100%;
-    
+
     // height: calc(100vh -0.1rem);
     .hot-city {
       // width: 100%;

@@ -14,7 +14,7 @@
     </div>
     <div class="banner">
       <van-swipe :autoplay="3000" @change="swipeChange" >
-        <van-swipe-item v-for="(item,index) in bannerList" :key="index">
+        <van-swipe-item v-for="(item,index) in indexBanner" :key="index">
           <div class="banner-img" :style="`background-image:url(${item.image_url})`"></div>
         </van-swipe-item>
         <template #indicator>
@@ -38,15 +38,14 @@
         </ul>
       </div>
     </div>
-    <section class="guideflow">
+    <div class="guideflow">
       <div class="guideflow-title">
         <span class="text">
           <span style="color:yellow;font-size:25px">|</span>
           推荐游记
         </span>
       </div>
-      <div class="content" style="height:170px" v-for="(item,index) in liList" :key="index">
-        <a href>
+      <div class="content" style="height:170px" v-for="(item,index) in indexLiList" :key="index">
           <div class="guideflow-content-title">
             {{item.text1}}
             <div class="tag">
@@ -73,10 +72,9 @@
               </div>
             </dd>
           </dl>
-        </a>
       </div>
-    </section>
-    <div class="load" v-if="liList.length <= 15" @click="loadMore">点击加载更多</div>
+    </div>
+    <div class="load" v-if="indexLiList.length <= 15" @click="loadMore">点击加载更多</div>
     <div class="load" v-else>没有更多了~~~</div>
   </div>
 </template>
@@ -84,18 +82,15 @@
 <script>
 import logo from "./component/logo";
 import Search from "./component/Search";
-import { getBanner, getList } from "../../api/api";
-import { mapState } from "vuex";
+import { mapState,mapActions } from "vuex";
 export default {
   name: "Index",
   computed: {
-    ...mapState(["login"])
+    ...mapState(["login",'indexLiList','indexBanner','pageSize'])
   },
   data() {
     return {
       userImg: "",
-      pageSize: 1,
-      bannerList: [],
       iconList: [
         {
           title: "看游记",
@@ -104,17 +99,17 @@ export default {
           name: "youji"
         },
         {
-          title: "找攻略",
-          icon: require("@/assets/images/gonglve.png"),
-          color: "#ff9d00",
-          name: "gonglve"
+          title: "酒店",
+          icon: require("@/assets/images/jiudian.png"),
+          color: "#32a2f1",
+          name: "Hotel"
         },
 
         {
-          title: "问达人",
-          icon: require("@/assets/images/wen.png"),
-          color: "#42d6ba",
-          name: "daren"
+          title: "机票",
+          icon: require("@/assets/images/jipiao.png"),
+          color: "#acce0e",
+          name: "jipiao"
         },
         {
           title: "当地玩乐",
@@ -123,10 +118,10 @@ export default {
           name: "wanle"
         },
         {
-          title: "酒店",
-          icon: require("@/assets/images/jiudian.png"),
-          color: "#32a2f1",
-          name: "Hotel"
+          title: "找攻略",
+          icon: require("@/assets/images/gonglve.png"),
+          color: "#ff9d00",
+          name: "gonglve"
         },
         {
           title: "去旅行",
@@ -135,10 +130,10 @@ export default {
           name: "lvxing"
         },
         {
-          title: "机票",
-          icon: require("@/assets/images/jipiao.png"),
-          color: "#acce0e",
-          name: "jipiao"
+          title: "问达人",
+          icon: require("@/assets/images/wen.png"),
+          color: "#42d6ba",
+          name: "daren"
         },
         {
           title: "我的",
@@ -147,7 +142,6 @@ export default {
           name: "user"
         }
       ],
-      liList: []
     };
   },
   components: {
@@ -162,8 +156,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getIndexList','getIndexBanner']),
     swipeChange(e){
-      this.$refs.slider.style.transform  = `translateX(${e*2.11}rem)`
+      this.$refs.slider.style.transition = 'transform 400ms ease-out'
+      this.$refs.slider.style.transform = `translate(${e*2.1}rem)`
     },
     handRouter(id) {
       if (id == "user") {
@@ -179,17 +175,6 @@ export default {
     },
     goToDL() {
       this.$router.push({ path: "/login" });
-    },
-    getIndexBanner() {
-      getBanner().then(res => {
-        this.bannerList = res.data.banner;
-      });
-    },
-    getIndexList() {
-      getList({ page: this.pageSize }).then(res => {
-        this.liList = [...this.liList, ...res.data.strategy];
-        this.pageSize++;
-      });
     },
     loadMore() {
       this.getIndexList();

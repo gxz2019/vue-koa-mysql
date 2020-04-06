@@ -13,11 +13,8 @@
 
 <script>
 // import BScroll from 'better-scroll'
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState } from 'vuex'
 export default {
-  props:{
-    cities:Object
-  },
   data() {
     return {
      currentIndex: 0,
@@ -26,11 +23,12 @@ export default {
   methods:{
     ...mapMutations(['transmitIndex']),
     handLetterClick(i) {
-      this.currentIndex = i
+    this.currentIndex = i
     this.transmitIndex(i)
   }
   },
   computed: {
+    ...mapState(['cities']),
     shortcutList() {
       var res = [];
       for (let k in this.cities) {
