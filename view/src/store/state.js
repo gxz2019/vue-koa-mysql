@@ -14,6 +14,7 @@ const state = {
   hotelLists:[], //酒店列表
   hotCities:[],   //热门城市
   cities:[],   //城市列表
+  user:{}
 }
 
 export default state

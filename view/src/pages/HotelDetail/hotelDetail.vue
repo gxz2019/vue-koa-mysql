@@ -160,7 +160,7 @@
         <span>每晚</span>
         <span>￥{{roomPice}}</span>
         <span>起</span>
-        <button>预定</button>
+        <button @click="handOrder">预定</button>
       </div>
     </van-popup>
   </div>
@@ -171,7 +171,7 @@ import { getHotelDetail, hotelComments } from "../../api/api";
 import { mapState } from 'vuex'
 export default {
   computed:{
-    ...mapState(['hotelLists','date'])
+    ...mapState(['hotelLists','date','login'])
   },
   data() {
     return {
@@ -216,6 +216,16 @@ export default {
     });
   },
   methods: {
+    handOrder() {
+      if(this.login == false) {
+        this.$router.push({path:'/login'})
+        this.$toast('请先登录')
+      }else{
+        this.show1 = false;
+        this.$toast('预定成功，请到我的订单中查看')
+        this.$router.push({path:'/user'})
+      }
+    },
     handClick() {
       this.page = this.list.length;
     },
