@@ -19,7 +19,7 @@
         </van-swipe-item>
         <template #indicator>
           <div class="custom-indicator">
-            <div  ref="slider"></div>
+            <div ref="slider"></div>
           </div>
         </template>
       </van-swipe>
@@ -38,14 +38,14 @@
         </ul>
       </div>
     </div>
-    <div class="guideflow">
+    <div class="guideflow" ref="list">
       <div class="guideflow-title">
-        <span class="text">
+        <span class="text" >
           <span style="color:yellow;font-size:25px">|</span>
           推荐游记
         </span>
       </div>
-      <div class="content" style="height:170px" v-for="(item,index) in indexLiList" :key="index">
+      <div class="content" style="height:170px" v-for="(item,index) in indexLiList" :key="index" @click="gotoYouji(index)">
           <div class="guideflow-content-title">
             {{item.text1}}
             <div class="tag">
@@ -157,20 +157,32 @@ export default {
   },
   methods: {
     ...mapActions(['getIndexList','getIndexBanner']),
+    gotoYouji(i){
+      this.$router.push({path:`/youji/${i}`})
+    },
     swipeChange(e){
       this.$refs.slider.style.transition = 'transform 400ms ease-out'
       this.$refs.slider.style.transform = `translate(${e*2.1}rem)`
     },
     handRouter(id) {
-      if (id == "user") {
-        if (this.login == false) {
+      switch (id) {
+        case "youji":
+          window.scrollTo(0,this.$refs.list.offsetTop)
+        return
+          break;
+        case "user":
+          if (this.login == false) {
           this.$router.push({ path: "/login" });
           this.$toast("请先登录");
+          return 
         } else {
           this.$router.push({ path: `/${id}` });
         }
-      } else {
-        this.$router.push({ path: `/${id}` });
+        case "Hotel" :
+          this.$router.push({ path: "/Hotel" });
+          return 
+        default:
+          alert('正在开发中，敬请期待')
       }
     },
     goToDL() {

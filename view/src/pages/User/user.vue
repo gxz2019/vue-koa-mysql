@@ -36,7 +36,7 @@
     <van-popup v-model="show1" position="right" :style="{ width: '100%', height:'100%'}">
       <div class="container">
         <div class="i">
-          <div><i class="iconfont">&#xe607;</i></div>
+          <div @click="returnLast"><i class="iconfont">&#xe607;</i></div>
           <div><span>我的订单</span></div>
         </div>
         <div class="content" >
@@ -91,6 +91,9 @@ export default {
       if (i == 2) {
         this.show1 = true;
       }
+    },
+    returnLast() {
+      this.show1 = false
     },
     handClick() {
       this.$router.push({ path: "/index" });

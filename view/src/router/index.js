@@ -8,6 +8,7 @@ import Hotel from '@/pages/Hotel/Hotel'
 import City from '@/pages/City/city'
 import HotelPages from '@/pages/Hotelpages/hotelpages'
 import HotelDetail from '@/pages/HotelDetail/hotelDetail'
+import YouJi from '@/pages/youji/youji'
 
 Vue.use(Router)
 
@@ -72,6 +73,14 @@ export default new Router({
       component: HotelDetail,
       meta:{
         title:'酒店详情页面'
+      }
+    },
+    {
+      path: '/youji/:id',
+      name: 'youji',
+      component: YouJi,
+      meta:{
+        title:'游记'
       }
     }
   ]

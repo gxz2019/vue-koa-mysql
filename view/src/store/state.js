@@ -12,7 +12,7 @@ const state = {
   indexBanner:[],  //首页轮播图
   indexLiList:[],  //首页列表
   hotelLists:[], //酒店列表
-  hotCities:[],   //热门城市
+  hotCities:[],   //热门城市 
   cities:[],   //城市列表
   user:{}
 }

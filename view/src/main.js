@@ -9,6 +9,10 @@ import store from './store'
 Vue.config.productionTip = false
 Vue.use(Swipe).use(SwipeItem).use(Calendar).use(Uploader).use(Toast).use(Icon).use(Popup)
 
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0)
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
